@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>My To Do</title>
+	<link href="css/main.css" rel="stylesheet">
+	<script src="js/main.js"></script>
+</head>
+<body>
+	<div class="todo-container">
+		<div class="todo-content">
+			<div class="sidebar">
+				<h1 class="title">List</h1>
+				<ul id="lists"></ul>
+				<div id="add-list" class="add-button">
+					+
+				</div>
+			</div>
+			<div class="task-container">
+				<div class="task-title-container">
+					<h1 class="title">Task</h1>
+					<div class="title-button-container">
+						<div class="edit-list-title">Edit</div>
+						<div class="edit-delete-title">Del</div>
+					</div>
+				</div>
+				<div id="tasks"></div>
+				<div id="add-task" class="add-button">+</div>
+			</div>
+		</div>
+
+		<div class="edit-console">
+			<div class="edit-list"></div>
+		</div>
+		
+		<div class="add-console">
+			<div id="add-list-console" class="add-item">
+				<label for="add-list-name">List Name:</label>
+				<input type="text" name="add-list-name" id="add-list-name">
+				<div class="add-list-action">
+					<button id="save-new-list">save</button>
+					<button id="cancel-new-list">cancel</button>
+				</div>
+			</div>
+			
+			<div id="add-task-console" class="add-item">
+				<label for="add-task-name">task Name:</label>
+				<input type="text" name="add-task-name" id="add-task-name">
+				<div class="add-task-action">
+					<button id="save-new-task">save</button>
+					<button id="cancel-new-task">cancel</button>
+				</div>
+			</div>
+			
+			<div id="edit-task-console" class="add-item">
+				<label for="edit-task-name">task Name:</label>
+				<input type="text" name="edit-task-name" id="edit-task-name">
+				<div class="edit-task-action">
+					<button id="save-edit-task">save</button>
+					<button id="cancel-edit-task">cancel</button>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</body>
+</html>
