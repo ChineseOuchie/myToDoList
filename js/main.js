@@ -103,6 +103,8 @@ function refreshList(object, lastVisit) {
 			showTaskFromListId(object, lastVisit.id);
 			element.classList.add('active-list');
 			document.querySelector('.title-button-container').style.visibility = 'visible';
+		} else {
+			location.reload();
 		}
 	});
 }
