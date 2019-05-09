@@ -22,6 +22,7 @@ h1 {
       -ms-flex-align: center;
           align-items: center;
   height: 100%;
+  margin: 20px;
 }
 
 .todo-container .todo-content {
