@@ -197,10 +197,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	const lastVisitedList = JSON.parse(localStorage.getItem('lastList'));
 	// Show all list from Localstorage
-	showLists(data, listContainer, taskContainer);
+	if(data) {
+		showLists(data, listContainer, taskContainer);
 
-	refreshList(data, lastVisitedList);
-	checkDone(data);
+		refreshList(data, lastVisitedList);
+		checkDone(data);
+	}
+	
 
 	listButtonAdd.addEventListener('click', () => {
 		listAddConsole.classList.add('adding-list');
