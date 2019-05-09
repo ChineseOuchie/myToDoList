@@ -202,7 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		refreshList(data, lastVisitedList);
 		checkDone(data);
-	}
+	
 	
 
 	listButtonAdd.addEventListener('click', () => {
@@ -356,6 +356,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		deleteList(data, listId);
 		save('', data);
+	});
+}
+	listButtonSave.addEventListener('click', () => {
+		listAddConsole.classList.remove('adding-list');
+		const nextId = data.data.length + 1;
+
+		if (listNameInput.value === '') {
+			data.data.push({id: nextId, listname: `New List ${nextId}`, task: [], param: ''});
+		} else {
+			data.data.push({id: nextId, listname: listNameInput.value, task: [], param: ''});
+		}
+
+		save(listNameInput, data);
 	});
 });
 
