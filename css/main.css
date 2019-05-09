@@ -92,6 +92,10 @@ h1 {
   padding: 10px;
 }
 
+.todo-container .todo-content .task-container .task-name {
+  width: 100%;
+}
+
 .todo-container .todo-content .task-container .task-actions {
   margin-left: auto;
 }

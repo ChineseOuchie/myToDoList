@@ -45,12 +45,12 @@ function showTaskFromListId(object, listId) {
 			task.innerHTML = '';
 
 			taskTitle.innerHTML = element.listname;
-			taskTitle.setAttribute('task-id', key);
+			taskTitle.setAttribute('data-list-id', key);
 
 			taskData.forEach(element => {	
 				task.innerHTML += 
 				`<div class="task" data-list-id="${key}" data-task-id="${element.id}" data-task-done="${element.done}">
-					<div class="taskName">${element.taskName}</div>
+					<div class="task-name">${element.taskName}</div>
 					<div class="task-actions">
 						<div class="task-edit" data-list-id="${key}" data-task-id="${element.id}">Edit</div>
 						<div class="task-delete" data-list-id="${key}" data-task-id="${element.id}">Del</div>
@@ -90,7 +90,7 @@ function saveLastVisited() {
 
 function refreshList(object, lastVisit) {
 	document.querySelectorAll('.list').forEach(element => {
-		if (element.dataset.listId == lastVisit.id && element.innerHTML == lastVisit.title) {
+		if (element.dataset.listId == lastVisit.id) {
 			document.getElementById('add-task').style.display = 'flex';
 			showTaskFromListId(object, lastVisit.id);
 			element.classList.add('active-list');
@@ -139,13 +139,32 @@ function checkDone() {
 	tasks.forEach(element => {
 		switch(element.dataset.taskDone) {
 			case 'true':
-				element.querySelector('.taskName').classList.add('taskDone');
+				element.querySelector('.task-name').classList.add('taskDone');
 				break;
 			case 'false':
-				element.querySelector('.taskName').classList.remove('taskDone');
+				element.querySelector('.task-name').classList.remove('taskDone');
 				break;
 		}
 	});
+}
+
+function editListName(object, listId, value) {
+	object.data.forEach(element => {
+		const objectListId = element.id;
+		
+		if (objectListId == listId) {
+			element.listname = value;
+		}
+	});
+}
+
+function save(inputClear, data) {
+	if (inputClear) {
+		inputClear.value = '';
+	}
+
+	updateLocalstorage('data', data);
+	location.reload();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -184,10 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			data.data.push({id: nextId, listname: listNameInput.value, task: [], param: ''});
 		}
 
-		listNameInput.value = '';
-
-		updateLocalstorage('data', data);
-		location.reload();
+		save(listNameInput, data);
 	});
 
 	listButtonCancel.addEventListener('click', () => {
@@ -220,10 +236,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 				}
 			});
-			
-			taskInputValue.value = '';
-			updateLocalstorage('data', data);
-			location.reload();
+
+			save(taskInputValue, data);
 		}
 	});
 
@@ -268,9 +282,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	const editTaskConsole = document.getElementById('edit-task-console');
 	editTaskButtons.forEach(element => {
 		element.addEventListener('click', () => {
-			editTaskConsole.style.visibility = 'visible';
-
 			const editTaskSave = document.getElementById('save-edit-task');
+			const editTaskCancel = document.getElementById('cancel-edit-task');
+			editTaskConsole.style.visibility = 'visible';
 
 			editTaskSave.addEventListener('click', () => {
 				const editTaskSaveValue = document.getElementById('edit-task-name').value;
@@ -278,26 +292,44 @@ document.addEventListener('DOMContentLoaded', () => {
 				const listId = element.dataset.listId;
 	
 				editTask(data, taskId, listId, editTaskSaveValue);
+				save(editTaskSaveValue, data);
+			});
 
-				editTaskSaveValue.value = '';
-				updateLocalstorage('data', data);
-				location.reload();
-
+			editTaskCancel.addEventListener('click', () => {
+				editTaskConsole.style.visibility = 'hidden';
 			});
 		});
 	});
 
 	
 	// Done task.
-	const tasks = document.querySelectorAll('.task');
+	const tasks = document.querySelectorAll('.task-name');
 	tasks.forEach(element => {
 		element.addEventListener('click', () => {
-			const taskId = element.dataset.taskId;	
-			const listId = element.dataset.listId;
+			const taskId = element.parentNode.dataset.taskId;	
+			const listId = element.parentNode.dataset.listId;
 
 			taskDone(data, taskId, listId);
-			updateLocalstorage('data', data);
-			location.reload();
+			save('', data);
+		});
+	});
+
+	// Edit list
+	const editListButton = document.querySelectorAll('.edit-list-title')[0];
+	editListButton.addEventListener('click', () => {
+		const editListConsole = document.getElementById('edit-list-console');
+		const editListSaveButton = document.getElementById('save-edit-list');
+
+		editListConsole.style.visibility = 'visible';
+		editListSaveButton.addEventListener('click', () => {
+			const editListNameValue = document.getElementById('edit-list-name').value;
+			const editListId = document.querySelector('.list-title').dataset.listId;
+
+			editListName(data, editListId, editListNameValue);
+
+			editListConsole.style.visibility = 'hidden';
+
+			save(editListConsole, data);
 		});
 	});
 });
