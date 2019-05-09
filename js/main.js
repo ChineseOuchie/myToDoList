@@ -82,9 +82,17 @@ function removeTask(taskId, listId, data) {
 }
 
 function saveLastVisited() {
-	const lastList = document.querySelector('.active-list');
-	const listId = lastList.dataset.listId;
-
+	let lastList = '';
+	let listId = '';
+	if (document.querySelector('.active-list')) {
+		lastList = document.querySelector('.active-list');
+		listId = lastList.dataset.listId;	
+		
+	} else {
+		lastList = document.querySelector('.list');
+		listId = lastList.dataset.listId;	
+	}
+	
 	localStorage.setItem('lastList', JSON.stringify({id: listId, title: lastList.innerHTML}));
 }
 
@@ -195,167 +203,196 @@ document.addEventListener('DOMContentLoaded', () => {
 	const taskButtonCancel = document.getElementById('cancel-new-task');
 	const taskInputValue = document.getElementById('add-task-name');
 
-	const lastVisitedList = JSON.parse(localStorage.getItem('lastList'));
-	// Show all list from Localstorage
-	showLists(data, listContainer, taskContainer);
-
-	refreshList(data, lastVisitedList);
-	checkDone(data);
+	if (data) {
+		const lastVisitedList = JSON.parse(localStorage.getItem('lastList'));
+		// Show all list from Localstorage
+		showLists(data, listContainer, taskContainer);
+	
+		refreshList(data, lastVisitedList);
+		checkDone(data);
+		
+		
+	
+		listButtonAdd.addEventListener('click', () => {
+			listAddConsole.classList.add('adding-list');
+		});
+		
+		listButtonSave.addEventListener('click', () => {
+			listAddConsole.classList.remove('adding-list');
+			const nextId = data.data.length + 1;
+	
+			if (listNameInput.value === '') {
+				data.data.push({id: nextId, listname: `New List ${nextId}`, task: [], param: ''});
+			} else {
+				data.data.push({id: nextId, listname: listNameInput.value, task: [], param: ''});
+			}
+	
+			save(listNameInput, data);
+		});
+	
+		listButtonCancel.addEventListener('click', () => {
+			listAddConsole.classList.remove('adding-list');
+			listNameInput.value = '';
+		});
 	
 	
-
-	listButtonAdd.addEventListener('click', () => {
-		listAddConsole.classList.add('adding-list');
-	});
+		taskButtonAdd.addEventListener('click', () => {
+			taskAddConsole.classList.add('adding-list');
+		});
 	
-	listButtonSave.addEventListener('click', () => {
-		listAddConsole.classList.remove('adding-list');
-		const nextId = data.data.length + 1;
-
-		if (listNameInput.value === '') {
-			data.data.push({id: nextId, listname: `New List ${nextId}`, task: [], param: ''});
-		} else {
-			data.data.push({id: nextId, listname: listNameInput.value, task: [], param: ''});
-		}
-
-		save(listNameInput, data);
-	});
-
-	listButtonCancel.addEventListener('click', () => {
-		listAddConsole.classList.remove('adding-list');
-		listNameInput.value = '';
-	});
-
-
-	taskButtonAdd.addEventListener('click', () => {
-		taskAddConsole.classList.add('adding-list');
-	});
-
-	taskButtonSave.addEventListener('click', () => {
-		const activeList = document.querySelector('.active-list');
-
-		if (activeList) {
-			const listId = activeList.dataset.listId;
-			data.data.forEach(element => {
-				if (element.id == listId) {
-					let nextId = '';
-					if (element.task.length) {
-						nextId = element.task[element.task.length - 1].id + 1;
-					} else {
-						nextId = element.task.length + 1;
+		taskButtonSave.addEventListener('click', () => {
+			const activeList = document.querySelector('.active-list');
+	
+			if (activeList) {
+				const listId = activeList.dataset.listId;
+				data.data.forEach(element => {
+					if (element.id == listId) {
+						let nextId = '';
+						if (element.task.length) {
+							nextId = element.task[element.task.length - 1].id + 1;
+						} else {
+							nextId = element.task.length + 1;
+						}
+	
+						element.task.push({id: nextId, taskName: taskInputValue.value, done: false});
+	
+						updateLocalstorage('data', data);
+	
 					}
-
-					element.task.push({id: nextId, taskName: taskInputValue.value, done: false});
-
-					updateLocalstorage('data', data);
-
-				}
-			});
-
-			save(taskInputValue, data);
-		}
-	});
-
-	taskButtonCancel.addEventListener('click', () => {
-		taskAddConsole.classList.remove('adding-list');
-		taskInputValue.value = '';
-	});
-
-
-	const lists = document.querySelectorAll('.list');
-
-	// Show all task from selected list.
-	lists.forEach(element => {	
-		element.addEventListener('click', () => {
-			taskButtonAdd.style.display = 'flex';
-			lists.forEach(element => {
-				element.classList.remove('active-list');
-			});
-
-			const listId = element.dataset.listId;
-
-			showTaskFromListId(data, listId);
-			element.classList.add('active-list');
-			location.reload();
-
-		});
-	});
-
-	// Delete task
-	const deleteButtons = document.querySelectorAll('.task-delete');
-	deleteButtons.forEach(element => {
-		element.addEventListener('click', () => {
-			const taskId = element.dataset.taskId;
-			const listId = element.dataset.listId;
-
-			removeTask(taskId, listId, data);
-		});
-	});
+				});
 	
-	// Edit task
-	const editTaskButtons = document.querySelectorAll('.task-edit');
-	const editTaskConsole = document.getElementById('edit-task-console');
-	editTaskButtons.forEach(element => {
-		element.addEventListener('click', () => {
-			const editTaskSave = document.getElementById('save-edit-task');
-			const editTaskCancel = document.getElementById('cancel-edit-task');
-			editTaskConsole.style.visibility = 'visible';
-
-			editTaskSave.addEventListener('click', () => {
-				const editTaskSaveValue = document.getElementById('edit-task-name').value;
+				save(taskInputValue, data);
+			}
+		});
+	
+		taskButtonCancel.addEventListener('click', () => {
+			taskAddConsole.classList.remove('adding-list');
+			taskInputValue.value = '';
+		});
+	
+	
+		const lists = document.querySelectorAll('.list');
+	
+		// Show all task from selected list.
+		lists.forEach(element => {	
+			element.addEventListener('click', () => {
+				taskButtonAdd.style.display = 'flex';
+				lists.forEach(element => {
+					element.classList.remove('active-list');
+				});
+	
+				const listId = element.dataset.listId;
+	
+				showTaskFromListId(data, listId);
+				element.classList.add('active-list');
+				location.reload();
+	
+			});
+		});
+	
+		// Delete task
+		const deleteButtons = document.querySelectorAll('.task-delete');
+		deleteButtons.forEach(element => {
+			element.addEventListener('click', () => {
 				const taskId = element.dataset.taskId;
 				const listId = element.dataset.listId;
 	
-				editTask(data, taskId, listId, editTaskSaveValue);
-				save(editTaskSaveValue, data);
-			});
-
-			editTaskCancel.addEventListener('click', () => {
-				editTaskConsole.style.visibility = 'hidden';
+				removeTask(taskId, listId, data);
 			});
 		});
-	});
-
+		
+		// Edit task
+		const editTaskButtons = document.querySelectorAll('.task-edit');
+		const editTaskConsole = document.getElementById('edit-task-console');
+		editTaskButtons.forEach(element => {
+			element.addEventListener('click', () => {
+				const editTaskSave = document.getElementById('save-edit-task');
+				const editTaskCancel = document.getElementById('cancel-edit-task');
+				editTaskConsole.style.visibility = 'visible';
 	
-	// Done task.
-	const tasks = document.querySelectorAll('.task-name');
-	tasks.forEach(element => {
-		element.addEventListener('click', () => {
-			const taskId = element.parentNode.dataset.taskId;	
-			const listId = element.parentNode.dataset.listId;
-
-			taskDone(data, taskId, listId);
+				editTaskSave.addEventListener('click', () => {
+					const editTaskSaveValue = document.getElementById('edit-task-name').value;
+					const taskId = element.dataset.taskId;
+					const listId = element.dataset.listId;
+		
+					editTask(data, taskId, listId, editTaskSaveValue);
+					save(editTaskSaveValue, data);
+				});
+	
+				editTaskCancel.addEventListener('click', () => {
+					editTaskConsole.style.visibility = 'hidden';
+				});
+			});
+		});
+	
+		
+		// Done task.
+		const tasks = document.querySelectorAll('.task-name');
+		tasks.forEach(element => {
+			element.addEventListener('click', () => {
+				const taskId = element.parentNode.dataset.taskId;	
+				const listId = element.parentNode.dataset.listId;
+	
+				taskDone(data, taskId, listId);
+				save('', data);
+			});
+		});
+	
+		// Edit list
+		const editListButton = document.querySelectorAll('.edit-list-title')[0];
+		editListButton.addEventListener('click', () => {
+			const editListConsole = document.getElementById('edit-list-console');
+			const editListSaveButton = document.getElementById('save-edit-list');
+	
+			editListConsole.style.visibility = 'visible';
+			editListSaveButton.addEventListener('click', () => {
+				const editListNameValue = document.getElementById('edit-list-name').value;
+				const editListId = document.querySelector('.list-title').dataset.listId;
+	
+				editListName(data, editListId, editListNameValue);
+	
+				editListConsole.style.visibility = 'hidden';
+	
+				save(editListConsole, data);
+			});
+		});
+	
+		// Delete list
+		const deleteListButton = document.querySelectorAll('.edit-delete-title')[0];
+		deleteListButton.addEventListener('click', () => {
+			const listId = document.querySelector('.list-title').dataset.listId;
+	
+			deleteList(data, listId);
 			save('', data);
 		});
-	});
+	} else {
+		let data = {
+			data: []
+		};
 
-	// Edit list
-	const editListButton = document.querySelectorAll('.edit-list-title')[0];
-	editListButton.addEventListener('click', () => {
-		const editListConsole = document.getElementById('edit-list-console');
-		const editListSaveButton = document.getElementById('save-edit-list');
-
-		editListConsole.style.visibility = 'visible';
-		editListSaveButton.addEventListener('click', () => {
-			const editListNameValue = document.getElementById('edit-list-name').value;
-			const editListId = document.querySelector('.list-title').dataset.listId;
-
-			editListName(data, editListId, editListNameValue);
-
-			editListConsole.style.visibility = 'hidden';
-
-			save(editListConsole, data);
+		listButtonAdd.addEventListener('click', () => {
+			listAddConsole.classList.add('adding-list');
 		});
-	});
-
-	// Delete list
-	const deleteListButton = document.querySelectorAll('.edit-delete-title')[0];
-	deleteListButton.addEventListener('click', () => {
-		const listId = document.querySelector('.list-title').dataset.listId;
-
-		deleteList(data, listId);
-		save('', data);
-	});
+		
+		listButtonSave.addEventListener('click', () => {
+			listAddConsole.classList.remove('adding-list');
+			const nextId = data.data.length + 1;
+	
+			if (listNameInput.value === '') {
+				data.data.push({id: nextId, listname: `New List ${nextId}`, task: [], param: ''});
+			} else {
+				data.data.push({id: nextId, listname: listNameInput.value, task: [], param: ''});
+			}
+	
+			save(listNameInput, data);
+		});
+	
+		listButtonCancel.addEventListener('click', () => {
+			listAddConsole.classList.remove('adding-list');
+			listNameInput.value = '';
+		});
+	}
+});
 
 window.onbeforeunload = function(){
 	saveLastVisited();
