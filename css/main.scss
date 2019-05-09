@@ -1,9 +1,17 @@
 @import url('https://fonts.googleapis.com/css?family=Lato|Roboto');
 
+$mainColor: #ff4757;
+$secondaryColor: #ff6b81;
+$white: #f1f2f6;
+$tomato: #ff6348;
+$coral: #ff7f50;
+$orange: #ffa502;
+
 html,body {
 	height: 100%;
 	margin: 0;
-	font-family: 'Lato'
+	font-family: 'Lato';
+	background-image: linear-gradient(to right top, $secondaryColor, $mainColor);
 }
 
 h1 {
@@ -24,7 +32,12 @@ h1 {
 		height: 100%;
 		max-width: 1000px;
 		max-height: 680px;
-		border: 1px solid black;
+		background-color: $white;
+		border-radius: 5px;
+
+		.title {
+			color: $tomato;
+		}
 		
 		.sidebar {
 			display: flex;
@@ -32,7 +45,6 @@ h1 {
 			width: 250px;
 			height: 100%;
 			padding-left: 42px;
-			border: 1px solid;
 
 			ul {
 				margin: 0;
@@ -42,8 +54,14 @@ h1 {
 					list-style-type: none;
 					padding: 20px;
 					margin: 20px 0;
+					background-color: $orange;
+					cursor: pointer;
+					color: $white;
 
-					border: 1px solid;
+				}
+
+				.active-list {
+					background-color: $tomato;
 				}
 			}
 		}
@@ -88,6 +106,8 @@ h1 {
 					justify-content: center;
 					align-items: center;
 					padding: 20px;
+					visibility: hidden;
+
 
 					div {
 						padding: 10px;

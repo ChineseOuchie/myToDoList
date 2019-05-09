@@ -94,6 +94,7 @@ function refreshList(object, lastVisit) {
 			document.getElementById('add-task').style.display = 'flex';
 			showTaskFromListId(object, lastVisit.id);
 			element.classList.add('active-list');
+			document.querySelector('.title-button-container').style.visibility = 'visible';
 		}
 	});
 }
@@ -165,6 +166,16 @@ function save(inputClear, data) {
 
 	updateLocalstorage('data', data);
 	location.reload();
+}
+
+function deleteList(object, listId) {
+	object.data.forEach((element, index) => {
+		const objectListId = element.id;
+		
+		if (objectListId == listId) {
+			object.data.splice(index, 1);
+		}
+	});
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -331,6 +342,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 			save(editListConsole, data);
 		});
+	});
+
+	// Delete list
+	const deleteListButton = document.querySelectorAll('.edit-delete-title')[0];
+	deleteListButton.addEventListener('click', () => {
+		const listId = document.querySelector('.list-title').dataset.listId;
+
+		deleteList(data, listId);
+		save('', data);
 	});
 });
 
