@@ -197,8 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	const lastVisitedList = JSON.parse(localStorage.getItem('lastList'));
 	// Show all list from Localstorage
-	console.log(data.data);
-	if(data.data) {
+	if(data) {
 		showLists(data, listContainer, taskContainer);
 
 		refreshList(data, lastVisitedList);
