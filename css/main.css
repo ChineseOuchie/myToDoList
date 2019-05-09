@@ -73,6 +73,10 @@ h1 {
   color: #f1f2f6;
 }
 
+.todo-container .todo-content .sidebar ul li:hover {
+  background-color: #ff7f50;
+}
+
 .todo-container .todo-content .sidebar ul .active-list {
   background-color: #ff6348;
 }
@@ -105,6 +109,10 @@ h1 {
 
 .todo-container .todo-content .task-container .task {
   margin: 20px 0;
+}
+
+.todo-container .todo-content .task-container .task:hover {
+  background-color: #ced6e0;
 }
 
 .todo-container .todo-content .task-container .task-name {
