@@ -197,11 +197,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	const lastVisitedList = JSON.parse(localStorage.getItem('lastList'));
 	// Show all list from Localstorage
-	if(data) {
-		showLists(data, listContainer, taskContainer);
+	showLists(data, listContainer, taskContainer);
 
-		refreshList(data, lastVisitedList);
-		checkDone(data);
+	refreshList(data, lastVisitedList);
+	checkDone(data);
 	
 	
 
@@ -357,20 +356,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		deleteList(data, listId);
 		save('', data);
 	});
-}
-	listButtonSave.addEventListener('click', () => {
-		listAddConsole.classList.remove('adding-list');
-		const nextId = data.data.length + 1;
-
-		if (listNameInput.value === '') {
-			data.data.push({id: nextId, listname: `New List ${nextId}`, task: [], param: ''});
-		} else {
-			data.data.push({id: nextId, listname: listNameInput.value, task: [], param: ''});
-		}
-
-		save(listNameInput, data);
-	});
-});
 
 window.onbeforeunload = function(){
 	saveLastVisited();
