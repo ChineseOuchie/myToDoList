@@ -97,14 +97,15 @@ function saveLastVisited() {
 }
 
 function refreshList(object, lastVisit) {
+	if (!lastVisit) {
+		location.reload();
+	}
 	document.querySelectorAll('.list').forEach(element => {
 		if (element.dataset.listId == lastVisit.id) {
 			document.getElementById('add-task').style.display = 'flex';
 			showTaskFromListId(object, lastVisit.id);
 			element.classList.add('active-list');
 			document.querySelector('.title-button-container').style.visibility = 'visible';
-		} else {
-			location.reload();
 		}
 	});
 }
