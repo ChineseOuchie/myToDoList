@@ -92,7 +92,7 @@ function saveLastVisited() {
 		lastList = document.querySelector('.list');
 		listId = lastList.dataset.listId;	
 	}
-	
+
 	localStorage.setItem('lastList', JSON.stringify({id: listId, title: lastList.innerHTML}));
 }
 
@@ -385,6 +385,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
 	
 			save(listNameInput, data);
+			location.reload();
 		});
 	
 		listButtonCancel.addEventListener('click', () => {
