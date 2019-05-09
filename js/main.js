@@ -52,8 +52,8 @@ function showTaskFromListId(object, listId) {
 				`<div class="task" data-list-id="${key}" data-task-id="${element.id}" data-task-done="${element.done}">
 					<div class="task-name">${element.taskName}</div>
 					<div class="task-actions">
-						<div class="task-edit" data-list-id="${key}" data-task-id="${element.id}">Edit</div>
-						<div class="task-delete" data-list-id="${key}" data-task-id="${element.id}">Del</div>
+						<div class="task-edit" data-list-id="${key}" data-task-id="${element.id}"><i class="fas fa-edit"></i></div>
+						<div class="task-delete" data-list-id="${key}" data-task-id="${element.id}"><i class="fas fa-trash-alt"></i></div>
 					</div>
 				</div>`;
 			});
@@ -141,9 +141,11 @@ function checkDone() {
 		switch(element.dataset.taskDone) {
 			case 'true':
 				element.querySelector('.task-name').classList.add('taskDone');
+				element.querySelector('.task-name').parentNode.classList.add('taskDoneParent');
 				break;
 			case 'false':
 				element.querySelector('.task-name').classList.remove('taskDone');
+				element.querySelector('.task-name').parentNode.classList.remove('taskDoneParent');
 				break;
 		}
 	});

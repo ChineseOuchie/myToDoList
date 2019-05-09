@@ -101,11 +101,16 @@ h1 {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  padding: 10px;
+}
+
+.todo-container .todo-content .task-container .task {
+  margin: 20px 0;
 }
 
 .todo-container .todo-content .task-container .task-name {
   width: 100%;
+  cursor: pointer;
+  padding: 20px;
 }
 
 .todo-container .todo-content .task-container .task-actions {
@@ -208,5 +213,13 @@ h1 {
 
 .taskDone {
   text-decoration: line-through;
+}
+
+.taskDoneParent {
+  background-color: #2ed573;
+}
+
+i {
+  cursor: pointer;
 }
 /*# sourceMappingURL=main.css.map */

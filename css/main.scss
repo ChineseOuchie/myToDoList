@@ -6,6 +6,7 @@ $white: #f1f2f6;
 $tomato: #ff6348;
 $coral: #ff7f50;
 $orange: #ffa502;
+$ufo: #2ed573;
 
 html,body {
 	height: 100%;
@@ -77,11 +78,16 @@ h1 {
 			.task, .task-actions {
 				display: flex;
 				align-items: center;
-				padding: 10px;
+			}
+
+			.task {
+				margin: 20px 0;
 			}
 
 			.task-name {
 				width: 100%;
+				cursor: pointer;
+				padding: 20px;
 			}
 			.task-actions {
 				margin-left: auto;
@@ -170,3 +176,10 @@ h1 {
 	text-decoration: line-through;
 }
 
+.taskDoneParent {
+	background-color: $ufo;
+}
+
+i {
+	cursor: pointer;
+}
