@@ -4,6 +4,7 @@ $mainColor: #ff4757;
 $secondaryColor: #ff6b81;
 $white: #f1f2f6;
 $tomato: #ff6348;
+$watermelon: #ff4757;
 $coral: #ff7f50;
 $orange: #ffa502;
 $ufo: #2ed573;
@@ -197,17 +198,48 @@ h1 {
 
 		.add-item {
 			display: none;
-			margin-left: auto; 
-			margin-right: auto; 
-			width: 300px;
-			height: 150px;
+			width: 100%;
+			height: 100%;
 			justify-content: center;
 			align-items: center;
 			flex-direction: column;
-			border: 1px solid;
 
-			.add-list-action {
+			label {
+				font-family: 'Roboto';
+				font-size: 45px;
+				font-weight: bold;
+			}
+
+			input {
+				width: 70%;
+				height: 50px;
+				font-size: 35px;
+			}
+
+			.console-action {
 				margin-top: 20px;
+
+				.save, .cancel {
+					border: none;
+					padding: 20px;
+					cursor: pointer;
+					color: $white;
+					background-color: $ufo;
+					width: 200px;
+					font-size: 25px;
+					
+					&:hover {
+						background-color: $darkUfo;
+					}
+				}
+
+				.cancel {
+					background-color: $tomato;
+
+					&:hover {
+						background-color: $watermelon;
+					}
+				}
 			}
 		}
 

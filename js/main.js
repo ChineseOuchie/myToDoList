@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		refreshList(data, lastVisitedList);
 		checkDone(data);
 		
-	
+
 		listButtonAdd.addEventListener('click', () => {
 			todoConsoleStart('add-list-console');
 		});
