@@ -355,6 +355,9 @@ i {
     display: block;
     width: 100%;
     padding: 0 20px;
+    -ms-flex-preferred-size: unset;
+        flex-basis: unset;
+    height: unset;
   }
   .todo-container .todo-content .sidebar ul .list {
     margin: 10px 0;
