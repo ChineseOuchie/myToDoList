@@ -349,6 +349,9 @@ i {
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
+    -webkit-box-pack: initial;
+        -ms-flex-pack: initial;
+            justify-content: initial;
     max-height: none;
   }
   .todo-container .todo-content .sidebar {
