@@ -333,13 +333,17 @@ i {
 
 @media (max-width: 520px) {
   body {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
     margin: 0;
     padding: 0;
     min-height: 100vh;
   }
   .todo-container {
-    height: 100%;
+    height: auto;
     min-height: 680px;
+    width: 100%;
   }
   .todo-container .todo-content {
     -webkit-box-orient: vertical;
