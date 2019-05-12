@@ -204,6 +204,15 @@ h1 {
 }
 
 .todo-container .todo-content .add-list-button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   padding: 20px;
   margin: 40px 0;
   cursor: pointer;
@@ -273,7 +282,7 @@ h1 {
   cursor: pointer;
   color: #f1f2f6;
   background-color: #2ed573;
-  width: 200px;
+  width: 180px;
   font-size: 25px;
 }
 

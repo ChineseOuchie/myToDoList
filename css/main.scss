@@ -168,6 +168,9 @@ h1 {
 		}
 
 		.add-list-button {
+			display: flex;
+			justify-content: center;
+			align-items: center;
 			padding: 20px;
 			margin: 40px 0;
 			cursor: pointer;
@@ -225,7 +228,7 @@ h1 {
 					cursor: pointer;
 					color: $white;
 					background-color: $ufo;
-					width: 200px;
+					width: 180px;
 					font-size: 25px;
 					
 					&:hover {
