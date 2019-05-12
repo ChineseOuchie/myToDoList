@@ -270,6 +270,7 @@ h1 {
   width: 70%;
   height: 50px;
   font-size: 35px;
+  border: none;
 }
 
 .todo-container .add-console .add-item .console-action {
