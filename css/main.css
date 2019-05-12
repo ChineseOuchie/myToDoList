@@ -338,7 +338,8 @@ i {
     min-height: 100vh;
   }
   .todo-container {
-    height: auto;
+    height: 100%;
+    min-height: 680px;
   }
   .todo-container .todo-content {
     -webkit-box-orient: vertical;
