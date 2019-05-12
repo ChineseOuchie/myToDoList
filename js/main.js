@@ -1,38 +1,4 @@
-// const data = {
-// 	data: [
-// 		{
-// 			id: 1,
-// 			listname: 'List 1',
-// 			task: [
-// 				{id: 1, taskName: 'task1', done: false,},
-// 				{id: 2, taskName: 'task2', done: false,},
-// 			],
-// 			param: '',
-// 		},
-// 		{
-// 			id: 2,
-// 			listname: 'List 2',
-// 			task: [
-// 				{id: 1, taskName: 'task4', done: false,},
-// 				{id: 2, taskName: 'task5', done: true,},
-// 			],
-// 			param: '',
-// 		}
-// 	]
-// };
-
-// localStorage.setItem('data', JSON.stringify(data));
-
-
 const data = JSON.parse(localStorage.getItem('data'));
-
-function showLists(object, list) {
-	object.data.forEach(element => {
-		const listName = element.listname;
-
-		list.innerHTML += `<li class="list" data-list-id="${element.id}">${listName}</li>`;
-	});
-}
 
 function showTaskFromListId(object, listId) {
 	const taskTitle = document.querySelector('.task-container').querySelector('h1');
@@ -66,37 +32,6 @@ function updateLocalstorage(key, data) {
 	localStorage.setItem(key, JSON.stringify(data));
 }
 
-function removeTask(taskId, listId, data) {
-	data.data.forEach(element => {
-		if (element.id == listId) {
-			element.task.forEach((taskElement, index) => {
-				if (taskElement.id == taskId) {
-					element.task.splice(index, 1);
-
-					updateLocalstorage('data', data);
-					location.reload();
-
-				}
-			});
-		}
-	});
-}
-
-function saveLastVisited() {
-	let lastList = '';
-	let listId = '';
-	if (document.querySelector('.active-list')) {
-		lastList = document.querySelector('.active-list');
-		listId = lastList.dataset.listId;	
-		
-	} else {
-		lastList = document.querySelector('.list');
-		listId = lastList.dataset.listId;	
-	}
-
-	localStorage.setItem('lastList', JSON.stringify({id: listId, title: lastList.innerHTML}));
-}
-
 function refreshList(object, lastVisit) {
 	if (!lastVisit) {
 		location.reload();
@@ -108,20 +43,6 @@ function refreshList(object, lastVisit) {
 			element.classList.add('active-list');
 			document.querySelector('.title-button-container').style.visibility = 'visible';
 		}
-	});
-}
-
-function editTask(object, taskId, listId, value) {
-	object.data.forEach(element => {
-		const objectListId = element.id;
-		
-		element.task.forEach(elementTask => {
-			const objectTaskId = elementTask.id;
-
-			if (objectListId == listId && objectTaskId == taskId) {
-				elementTask.taskName = value;
-			}
-		});
 	});
 }
 
@@ -163,33 +84,74 @@ function checkDone() {
 	});
 }
 
-function editListName(object, listId, value) {
-	object.data.forEach(element => {
-		const objectListId = element.id;
-		
-		if (objectListId == listId) {
-			element.listname = value;
-		}
-	});
-}
-
-function save(inputClear, data) {
-	if (inputClear) {
-		inputClear.value = '';
-	}
-
+function save(data) {
 	updateLocalstorage('data', data);
 	location.reload();
 }
 
-function deleteList(object, listId) {
-	object.data.forEach((element, index) => {
-		const objectListId = element.id;
+function deleteItem(type, object, listId, taskId) {
+	switch(type) {
+		case 'list':
+			object.data.forEach((element, index) => {
+				const objectListId = element.id;
+				
+				if (objectListId == listId) {
+					object.data.splice(index, 1);
+				}
+			});
+			break;
+		case 'task':
+			object.data.forEach(element => {
+				if (element.id == listId) {
+					element.task.forEach((taskElement, index) => {
+						if (taskElement.id == taskId) {
+							element.task.splice(index, 1);
 		
-		if (objectListId == listId) {
-			object.data.splice(index, 1);
-		}
-	});
+							updateLocalstorage('data', data);
+							location.reload();
+		
+						}
+					});
+				}
+			});
+			break;
+	}
+}
+
+function todoConsoleStart(id) {
+	const todoConsole = document.querySelector('.add-console');
+	const todoContent = document.querySelector('.todo-content');
+	
+	todoConsole.style.display = 'flex';
+	todoContent.style.display = 'none';
+	document.getElementById(id).classList.add('adding-list');
+}
+
+function editItem(type, object, value, listId, taskId) {
+	switch(type) {
+		case 'list':
+			object.data.forEach(element => {
+				const objectListId = element.id;
+				
+				if (objectListId == listId) {
+					element.listname = value;
+				}
+			});
+			break;
+		case 'task':
+			object.data.forEach(element => {
+				const objectListId = element.id;
+				
+				element.task.forEach(elementTask => {
+					const objectTaskId = elementTask.id;
+		
+					if (objectListId == listId && objectTaskId == taskId) {
+						elementTask.taskName = value;
+					}
+				});
+			});
+			break;
+	}
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -200,25 +162,26 @@ document.addEventListener('DOMContentLoaded', () => {
 	const listButtonCancel = document.getElementById('cancel-new-list');
 	const listNameInput = document.getElementById('add-list-name');
 
-	const taskContainer = document.getElementById('tasks');
 	const taskButtonAdd = document.getElementById('add-task');
-	const taskAddConsole = document.getElementById('add-task-console');
 	const taskButtonSave = document.getElementById('save-new-task');
 	const taskButtonCancel = document.getElementById('cancel-new-task');
 	const taskInputValue = document.getElementById('add-task-name');
 
 	if (data) {
 		const lastVisitedList = JSON.parse(localStorage.getItem('lastList'));
+
 		// Show all list from Localstorage
-		showLists(data, listContainer, taskContainer);
+		data.data.forEach(element => {
+			const listName = element.listname;
+			listContainer.innerHTML += `<li class="list" data-list-id="${element.id}">${listName}</li>`;
+		});
 	
 		refreshList(data, lastVisitedList);
 		checkDone(data);
 		
-		
 	
 		listButtonAdd.addEventListener('click', () => {
-			listAddConsole.classList.add('adding-list');
+			todoConsoleStart('add-list-console');
 		});
 		
 		listButtonSave.addEventListener('click', () => {
@@ -231,17 +194,16 @@ document.addEventListener('DOMContentLoaded', () => {
 				data.data.push({id: nextId, listname: listNameInput.value, task: [], param: ''});
 			}
 	
-			save(listNameInput, data);
+			save(data);
 		});
 	
 		listButtonCancel.addEventListener('click', () => {
-			listAddConsole.classList.remove('adding-list');
-			listNameInput.value = '';
+			location.reload();
 		});
 	
 	
 		taskButtonAdd.addEventListener('click', () => {
-			taskAddConsole.classList.add('adding-list');
+			todoConsoleStart('add-task-console');
 		});
 	
 		taskButtonSave.addEventListener('click', () => {
@@ -265,13 +227,12 @@ document.addEventListener('DOMContentLoaded', () => {
 					}
 				});
 	
-				save(taskInputValue, data);
+				save(data);
 			}
 		});
 	
 		taskButtonCancel.addEventListener('click', () => {
-			taskAddConsole.classList.remove('adding-list');
-			taskInputValue.value = '';
+			location.reload();
 		});
 	
 	
@@ -290,7 +251,6 @@ document.addEventListener('DOMContentLoaded', () => {
 				showTaskFromListId(data, listId);
 				element.classList.add('active-list');
 				location.reload();
-	
 			});
 		});
 	
@@ -301,7 +261,8 @@ document.addEventListener('DOMContentLoaded', () => {
 				const taskId = element.dataset.taskId;
 				const listId = element.dataset.listId;
 	
-				removeTask(taskId, listId, data);
+				// removeTask(taskId, listId, data);
+				deleteItem('task', data, listId, taskId);
 			});
 		});
 		
@@ -312,19 +273,21 @@ document.addEventListener('DOMContentLoaded', () => {
 			element.addEventListener('click', () => {
 				const editTaskSave = document.getElementById('save-edit-task');
 				const editTaskCancel = document.getElementById('cancel-edit-task');
-				editTaskConsole.style.visibility = 'visible';
+				// editTaskConsole.style.visibility = 'visible';
+				todoConsoleStart('edit-task-console');
 	
 				editTaskSave.addEventListener('click', () => {
 					const editTaskSaveValue = document.getElementById('edit-task-name').value;
 					const taskId = element.dataset.taskId;
 					const listId = element.dataset.listId;
+
 		
-					editTask(data, taskId, listId, editTaskSaveValue);
-					save(editTaskSaveValue, data);
+					editItem('task', data, editTaskSaveValue, listId, taskId);
+					save(data);
 				});
 	
 				editTaskCancel.addEventListener('click', () => {
-					editTaskConsole.style.visibility = 'hidden';
+					location.reload();
 				});
 			});
 		});
@@ -338,26 +301,28 @@ document.addEventListener('DOMContentLoaded', () => {
 				const listId = element.parentNode.dataset.listId;
 	
 				taskDone(data, taskId, listId);
-				save('', data);
+				save(data);
 			});
 		});
 	
 		// Edit list
 		const editListButton = document.querySelectorAll('.edit-list-title')[0];
 		editListButton.addEventListener('click', () => {
-			const editListConsole = document.getElementById('edit-list-console');
 			const editListSaveButton = document.getElementById('save-edit-list');
+			const editListCancelButton = document.getElementById('cancel-edit-list');
 	
-			editListConsole.style.visibility = 'visible';
+			todoConsoleStart('edit-list-console');
+
 			editListSaveButton.addEventListener('click', () => {
 				const editListNameValue = document.getElementById('edit-list-name').value;
 				const editListId = document.querySelector('.list-title').dataset.listId;
 	
-				editListName(data, editListId, editListNameValue);
-	
-				editListConsole.style.visibility = 'hidden';
-	
-				save(editListConsole, data);
+				editItem('list', data, editListNameValue, editListId);
+				save(data);
+			});
+
+			editListCancelButton.addEventListener('click', () => {
+				location.reload();
 			});
 		});
 	
@@ -366,8 +331,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		deleteListButton.addEventListener('click', () => {
 			const listId = document.querySelector('.list-title').dataset.listId;
 	
-			deleteList(data, listId);
-			save('', data);
+			deleteItem('list', data, listId);
+			save(data);
 		});
 	} else {
 		let data = {
@@ -375,7 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		};
 
 		listButtonAdd.addEventListener('click', () => {
-			listAddConsole.classList.add('adding-list');
+			todoConsoleStart('add-list-console');
 		});
 		
 		listButtonSave.addEventListener('click', () => {
@@ -388,17 +353,27 @@ document.addEventListener('DOMContentLoaded', () => {
 				data.data.push({id: nextId, listname: listNameInput.value, task: [], param: ''});
 			}
 	
-			save(listNameInput, data);
+			save(data);
 			location.reload();
 		});
 	
 		listButtonCancel.addEventListener('click', () => {
-			listAddConsole.classList.remove('adding-list');
-			listNameInput.value = '';
+			location.reload();
 		});
 	}
 });
 
 window.onbeforeunload = function(){
-	saveLastVisited();
+	let lastList = '';
+	let listId = '';
+	if (document.querySelector('.active-list')) {
+		lastList = document.querySelector('.active-list');
+		listId = lastList.dataset.listId;	
+		
+	} else {
+		lastList = document.querySelector('.list');
+		listId = lastList.dataset.listId;	
+	}
+
+	localStorage.setItem('lastList', JSON.stringify({id: listId, title: lastList.innerHTML}));
 };
