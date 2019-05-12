@@ -282,7 +282,8 @@ i {
 		padding: 0;
 	}
 	.todo-container {
-
+		height: auto;
+		
 		.todo-content {
 			flex-direction: column;
 			max-height: none;
@@ -295,7 +296,13 @@ i {
 				ul {
 					.list {
 						margin: 10px 0;
+						padding: 15px;
 					}
+				}
+
+				.add-list-button {
+					margin: 25px 0;
+					padding: 15px;
 				}
 			}
 			

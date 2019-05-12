@@ -336,6 +336,9 @@ i {
     margin: 0;
     padding: 0;
   }
+  .todo-container {
+    height: auto;
+  }
   .todo-container .todo-content {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
@@ -350,6 +353,11 @@ i {
   }
   .todo-container .todo-content .sidebar ul .list {
     margin: 10px 0;
+    padding: 15px;
+  }
+  .todo-container .todo-content .sidebar .add-list-button {
+    margin: 25px 0;
+    padding: 15px;
   }
   .todo-container .todo-content .task-container {
     width: 100%;
