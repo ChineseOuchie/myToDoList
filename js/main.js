@@ -268,21 +268,21 @@ document.addEventListener('DOMContentLoaded', () => {
 		
 		// Edit task
 		const editTaskButtons = document.querySelectorAll('.task-edit');
-		const editTaskConsole = document.getElementById('edit-task-console');
 		editTaskButtons.forEach(element => {
 			element.addEventListener('click', () => {
 				const editTaskSave = document.getElementById('save-edit-task');
 				const editTaskCancel = document.getElementById('cancel-edit-task');
-				// editTaskConsole.style.visibility = 'visible';
 				todoConsoleStart('edit-task-console');
+
+				const editTaskSaveValue = document.getElementById('edit-task-name');
+				editTaskSaveValue.value = element.parentElement.parentElement.querySelector('.task-name').innerHTML;
 	
 				editTaskSave.addEventListener('click', () => {
-					const editTaskSaveValue = document.getElementById('edit-task-name').value;
 					const taskId = element.dataset.taskId;
 					const listId = element.dataset.listId;
 
 		
-					editItem('task', data, editTaskSaveValue, listId, taskId);
+					editItem('task', data, editTaskSaveValue.value, listId, taskId);
 					save(data);
 				});
 	
@@ -313,11 +313,13 @@ document.addEventListener('DOMContentLoaded', () => {
 	
 			todoConsoleStart('edit-list-console');
 
+			const editListNameValue = document.getElementById('edit-list-name');
+			editListNameValue.value = editListButton.parentElement.parentElement.querySelector('.list-title').innerHTML;
+
 			editListSaveButton.addEventListener('click', () => {
-				const editListNameValue = document.getElementById('edit-list-name').value;
 				const editListId = document.querySelector('.list-title').dataset.listId;
 	
-				editItem('list', data, editListNameValue, editListId);
+				editItem('list', data, editListNameValue.value, editListId);
 				save(data);
 			});
 
