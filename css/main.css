@@ -274,6 +274,13 @@ h1 {
 }
 
 .todo-container .add-console .add-item .console-action {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
   margin-top: 20px;
 }
 
@@ -283,7 +290,8 @@ h1 {
   cursor: pointer;
   color: #f1f2f6;
   background-color: #2ed573;
-  width: 180px;
+  -ms-flex-preferred-size: 200px;
+      flex-basis: 200px;
   font-size: 25px;
 }
 

@@ -221,6 +221,9 @@ h1 {
 			}
 
 			.console-action {
+				display: flex;
+				justify-content: center;
+				width: 100%;
 				margin-top: 20px;
 
 				.save, .cancel {
@@ -229,7 +232,7 @@ h1 {
 					cursor: pointer;
 					color: $white;
 					background-color: $ufo;
-					width: 180px;
+					flex-basis: 200px;
 					font-size: 25px;
 					
 					&:hover {
