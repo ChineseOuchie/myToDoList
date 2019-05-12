@@ -1,4 +1,9 @@
 @import url("https://fonts.googleapis.com/css?family=Lato|Roboto");
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
 html, body {
   height: 100%;
   margin: 0;
@@ -55,7 +60,8 @@ h1 {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  width: 250px;
+  -ms-flex-preferred-size: 250px;
+      flex-basis: 250px;
   height: 100%;
   padding-left: 42px;
 }
@@ -131,7 +137,7 @@ h1 {
 }
 
 .todo-container .todo-content .task-container .task-actions .task-edit, .todo-container .todo-content .task-container .task-actions .task-delete {
-  margin: 0 10px;
+  margin: 0 20px;
 }
 
 .todo-container .todo-content .task-container .add-task {
@@ -323,5 +329,39 @@ h1 {
 
 i {
   cursor: pointer;
+}
+
+@media (max-width: 520px) {
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  .todo-container .todo-content {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    max-height: none;
+  }
+  .todo-container .todo-content .sidebar {
+    display: block;
+    width: 100%;
+    padding: 0 20px;
+  }
+  .todo-container .todo-content .sidebar ul .list {
+    margin: 10px 0;
+  }
+  .todo-container .todo-content .task-container {
+    width: 100%;
+    height: auto;
+    padding: 0 20px;
+  }
+  .todo-container .todo-content .task-container .add-task-button-container {
+    margin-top: unset;
+  }
+  .todo-container .todo-content .title {
+    margin: 0;
+    font-size: 35px;
+  }
 }
 /*# sourceMappingURL=main.css.map */
