@@ -342,6 +342,7 @@ i {
     height: unset;
   }
   .todo-container {
+    display: block;
     min-height: 680px;
     width: 100%;
   }
@@ -382,6 +383,17 @@ i {
   .todo-container .todo-content .title {
     margin: 0;
     font-size: 35px;
+  }
+  .todo-container .add-console .add-item .console-action {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .todo-container .add-console .add-item .console-action .save, .todo-container .add-console .add-item .console-action .cancel {
+    margin: 20px;
+    -ms-flex-preferred-size: unset;
+        flex-basis: unset;
   }
 }
 /*# sourceMappingURL=main.css.map */

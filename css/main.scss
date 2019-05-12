@@ -285,7 +285,7 @@ i {
 		height: unset;
 	}
 	.todo-container {
-		// height: auto;
+		display: block;
 		min-height: 680px;
 		width: 100%;
 
@@ -328,6 +328,21 @@ i {
 				margin: 0;
 				font-size: 35px;
 			}
+		}
+
+		.add-console {
+			.add-item {
+				.console-action {
+					flex-direction: column;
+		
+					.save, .cancel {
+						margin: 20px;
+						flex-basis: unset;
+					}
+				}
+	
+			}
+
 		}
 	}
 }
