@@ -69,6 +69,7 @@ h1 {
 .todo-container .todo-content .sidebar ul {
   margin: 0;
   padding: 0;
+  overflow-y: scroll;
 }
 
 .todo-container .todo-content .sidebar ul li {
@@ -112,6 +113,10 @@ h1 {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.todo-container .todo-content .task-container .tasks {
+  overflow-y: scroll;
 }
 
 .todo-container .todo-content .task-container .task {
@@ -364,6 +369,9 @@ i {
         flex-basis: unset;
     height: unset;
   }
+  .todo-container .todo-content .sidebar ul {
+    overflow-y: unset;
+  }
   .todo-container .todo-content .sidebar ul .list {
     margin: 10px 0;
     padding: 15px;
@@ -379,6 +387,9 @@ i {
   }
   .todo-container .todo-content .task-container .add-task-button-container {
     margin-top: unset;
+  }
+  .todo-container .todo-content .task-container .tasks {
+    overflow-y: unset;
   }
   .todo-container .todo-content .title {
     margin: 0;
