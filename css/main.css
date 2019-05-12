@@ -113,7 +113,11 @@ h1 {
 }
 
 .todo-container .todo-content .task-container .task:hover {
-  background-color: #ced6e0;
+  background-color: #2ed573;
+}
+
+.todo-container .todo-content .task-container .task-done-parent:hover {
+  background-color: #ff6348;
 }
 
 .todo-container .todo-content .task-container .task-name {
@@ -163,7 +167,22 @@ h1 {
   padding: 10px;
 }
 
-.todo-container .todo-content .add-button {
+.todo-container .todo-content .add-task-button-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-top: auto;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.todo-container .todo-content .add-task-button-container .add-task-button {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -173,14 +192,27 @@ h1 {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  font-size: 50px;
-  width: 50px;
+  -ms-flex-preferred-size: 200px;
+      flex-basis: 200px;
   height: 50px;
-  border-radius: 50%;
-  border: 1px solid;
-  margin-top: auto;
-  margin-bottom: 20px;
+  background-color: #2ed573;
+  color: #f1f2f6;
+}
+
+.todo-container .todo-content .add-task-button-container .add-task-button:hover {
+  background-color: #15bf5c;
+}
+
+.todo-container .todo-content .add-list-button {
+  padding: 20px;
+  margin: 40px 0;
   cursor: pointer;
+  color: #f1f2f6;
+  background-color: #2ed573;
+}
+
+.todo-container .todo-content .add-list-button:hover {
+  background-color: #15bf5c;
 }
 
 .todo-container .todo-content #add-task {
@@ -220,12 +252,12 @@ h1 {
   visibility: visible;
 }
 
-.taskDone {
+.task-done {
   text-decoration: line-through;
 }
 
-.taskDoneParent {
-  background-color: #2ed573;
+.task-done-parent {
+  opacity: 0.3;
 }
 
 i {

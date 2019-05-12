@@ -23,6 +23,7 @@
 
 // localStorage.setItem('data', JSON.stringify(data));
 
+
 const data = JSON.parse(localStorage.getItem('data'));
 
 function showLists(object, list) {
@@ -52,7 +53,7 @@ function showTaskFromListId(object, listId) {
 				`<div class="task" data-list-id="${key}" data-task-id="${element.id}" data-task-done="${element.done}">
 					<div class="task-name">${element.taskName}</div>
 					<div class="task-actions">
-						<div class="task-edit" data-list-id="${key}" data-task-id="${element.id}"><i class="fas fa-edit"></i></div>
+						<div class="task-edit" data-list-id="${key}" data-task-id="${element.id}"><i class="fas fa-pen"></i></div>
 						<div class="task-delete" data-list-id="${key}" data-task-id="${element.id}"><i class="fas fa-trash-alt"></i></div>
 					</div>
 				</div>`;
@@ -151,12 +152,12 @@ function checkDone() {
 	tasks.forEach(element => {
 		switch(element.dataset.taskDone) {
 			case 'true':
-				element.querySelector('.task-name').classList.add('taskDone');
-				element.querySelector('.task-name').parentNode.classList.add('taskDoneParent');
+				element.querySelector('.task-name').classList.add('task-done');
+				element.querySelector('.task-name').parentNode.classList.add('task-done-parent');
 				break;
 			case 'false':
-				element.querySelector('.task-name').classList.remove('taskDone');
-				element.querySelector('.task-name').parentNode.classList.remove('taskDoneParent');
+				element.querySelector('.task-name').classList.remove('task-done');
+				element.querySelector('.task-name').parentNode.classList.remove('task-done-parent');
 				break;
 		}
 	});
