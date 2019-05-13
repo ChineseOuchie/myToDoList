@@ -69,7 +69,7 @@ h1 {
 .todo-container .todo-content .sidebar ul {
   margin: 0;
   padding: 0;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .todo-container .todo-content .sidebar ul li {
@@ -116,7 +116,7 @@ h1 {
 }
 
 .todo-container .todo-content .task-container .tasks {
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .todo-container .todo-content .task-container .task {
