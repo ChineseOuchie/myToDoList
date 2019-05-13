@@ -61,7 +61,7 @@ h1 {
 			ul {
 				margin: 0;
 				padding: 0;
-				overflow-y: scroll;
+				overflow-y: auto;
 
 				li {
 					list-style-type: none;
@@ -97,7 +97,7 @@ h1 {
 			}
 
 			.tasks {
-				overflow-y: scroll;
+				overflow-y: auto;
 			}
 			.task {
 				margin: 20px 0;
